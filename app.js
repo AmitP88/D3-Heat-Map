@@ -20,7 +20,7 @@ const getData = () => {
         let y_min = d3.min(dataset.monthlyVariance, (d) => d.month);
         let y_max = d3.max(dataset.monthlyVariance, (d) => d.month);
         const yScale = d3.scaleTime()
-                         .domain([y_min, y_max])
+                         .domain([y_max, y_min])
                          .range([h - padding, padding]);
 
         /* Add an SVG Canvas */
@@ -28,7 +28,19 @@ const getData = () => {
                       .append("svg")
                       .attr("class", "canvas");
 
-
+        /* Add data points to SVG Canvas as bars */
+        svg.selectAll("rect")
+           .data(dataset.monthlyVariance)
+           .enter()
+           .append("rect")
+           .attr("x", (d) => xScale(d.year))
+           .attr("y", (d) => yScale(d.month))
+           .attr("height", 50 + "px")
+           .attr("width", 5 + "px")
+           .attr("fill", "blue")
+           .attr("data-month", (d) => (d.month))
+           .attr("data-year", (d) => (d.year));
+        
 
 
 
