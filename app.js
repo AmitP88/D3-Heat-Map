@@ -29,6 +29,9 @@ const getData = () => {
                       .attr("class", "canvas");
 
         /* Add data points to SVG Canvas as bars */
+        let baseTemperature = dataset.baseTemperature;
+        console.log(baseTemperature);
+
         svg.selectAll("rect")
            .data(dataset.monthlyVariance)
            .enter()
@@ -38,8 +41,10 @@ const getData = () => {
            .attr("height", 50 + "px")
            .attr("width", 5 + "px")
            .attr("fill", "blue")
+           .attr("class", "cell")
            .attr("data-month", (d) => (d.month))
-           .attr("data-year", (d) => (d.year));
+           .attr("data-year", (d) => (d.year))
+           .attr("data-temp", (d) => Math.round((d.variance + baseTemperature) * 10)/10);
         
 
 
