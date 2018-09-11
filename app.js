@@ -1,7 +1,7 @@
 const getData = () => {
     d3.json("https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/master/global-temperature.json", (error, dataset) => {
         if (error) console.log(error);
-        console.log(dataset);
+        // console.log(dataset);
 
         const w = 1000;
         const h = 500;
@@ -28,9 +28,22 @@ const getData = () => {
                       .append("svg")
                       .attr("class", "canvas");
 
+        /* Color codes for different temperatures - colors from http://www.december.com/html/spec/colorcodes.html */
+        const sign_blue = "#003F87";
+        const denim = "#4372AA";
+        const blue_sponge = "#5D92B1";
+        const light_blue = "#ADD8E6";
+        const lightcyan = "#E0FFFF";
+        const popcorn_yellow = "#FFFFAA";
+        const light_goldenrod = "#EEDD82";
+        const apricot1 = "#FBA16C";
+        const coral1 = "#FF7256";
+        const bloodorange = "#CC1100";
+        const red_delicious_apple = "#9D1309";
+
         /* Add data points to SVG Canvas as bars */
         let baseTemperature = dataset.baseTemperature;
-        console.log(baseTemperature);
+        // console.log(baseTemperature);
 
         svg.selectAll("rect")
            .data(dataset.monthlyVariance)
@@ -40,13 +53,52 @@ const getData = () => {
            .attr("y", (d) => yScale(d.month))
            .attr("height", 50 + "px")
            .attr("width", 5 + "px")
-           .attr("fill", "blue")
+           .attr("fill", (d) => {
+               let temp = Math.round((d.variance + baseTemperature) * 10)/10;
+            //    console.log("temp", temp);
+               switch(true) {
+                case (temp <= 2.8):
+                    return sign_blue;
+                    break;
+                case (temp > 2.8 && temp <= 3.9):
+                    return denim;
+                    break;
+                case (temp > 3.9 && temp <= 5.0):
+                    return blue_sponge;
+                    break;
+                case (temp > 5.0 && temp <= 6.1):
+                    return light_blue;
+                    break;
+                case (temp > 6.1 && temp <= 7.2):
+                    return lightcyan;
+                    break;
+                case (temp > 7.2 && temp <= 8.3):
+                    return popcorn_yellow;
+                    break;
+                case (temp > 8.3 && temp <= 9.5):
+                    return light_goldenrod;
+                    break;
+                case (temp > 9.5 && temp <= 10.6):
+                    return apricot1;
+                    break;
+                case (temp > 10.6 && temp <= 11.7):
+                    return coral1;
+                    break;
+                case (temp > 11.7 && temp <= 12.8):
+                    return bloodorange;
+                    break;
+                case (temp > 12.8):
+                    return red_delicious_apple;
+                    break;
+                default:
+                    return "white";
+               }
+           })
            .attr("class", "cell")
            .attr("data-month", (d) => (d.month))
            .attr("data-year", (d) => (d.year))
            .attr("data-temp", (d) => Math.round((d.variance + baseTemperature) * 10)/10);
         
-        /* LEGEND - colors from http://www.december.com/html/spec/colorcodes.html */
         /* background bar */
         svg.append("rect")
            .attr("x", 40)
@@ -62,7 +114,7 @@ const getData = () => {
            .attr("y", 600)
            .attr("height", 30 + "px")
            .attr("width", 40 + "px")
-           .attr("fill", "#003F87") // sign blue color
+           .attr("fill", sign_blue)
            .attr("class", "border");
         
         /* 2.8 - 3.9 blue bar */
@@ -71,7 +123,7 @@ const getData = () => {
            .attr("y", 600)
            .attr("height", 30 + "px")
            .attr("width", 40 + "px")
-           .attr("fill", "#4372AA") // denim color
+           .attr("fill", denim)
            .attr("class", "border");    
 
         /* 3.9 - 5.0 blue bar */
@@ -80,7 +132,7 @@ const getData = () => {
            .attr("y", 600)
            .attr("height", 30 + "px")
            .attr("width", 40 + "px")
-           .attr("fill", "#5D92B1") // blue sponge color
+           .attr("fill", blue_sponge)
            .attr("class", "border");  
 
         /* 5.0 - 6.1 blue bar */
@@ -89,7 +141,7 @@ const getData = () => {
            .attr("y", 600)
            .attr("height", 30 + "px")
            .attr("width", 40 + "px")
-           .attr("fill", "#ADD8E6") // lightblue (SVG) color
+           .attr("fill", light_blue)
            .attr("class", "border");
 
         /* 6.1 - 7.2 blue bar */
@@ -98,7 +150,7 @@ const getData = () => {
            .attr("y", 600)
            .attr("height", 30 + "px")
            .attr("width", 40 + "px")
-           .attr("fill", "#E0FFFF") // lightcyan (SVG) color
+           .attr("fill", lightcyan)
            .attr("class", "border");
 
         /* 7.2 - 8.3 yellow bar */
@@ -107,7 +159,7 @@ const getData = () => {
            .attr("y", 600)
            .attr("height", 30 + "px")
            .attr("width", 40 + "px")
-           .attr("fill", "#FFFFAA") // popcorn yellow color
+           .attr("fill", popcorn_yellow)
            .attr("class", "border"); 
 
         /* 8.3 - 9.5 yellow bar */
@@ -116,7 +168,7 @@ const getData = () => {
            .attr("y", 600)
            .attr("height", 30 + "px")
            .attr("width", 40 + "px")
-           .attr("fill", "#EEDD82") // light goldenrod color
+           .attr("fill", light_goldenrod)
            .attr("class", "border"); 
 
         /* 9.5 - 10.6 orange bar */
@@ -125,7 +177,7 @@ const getData = () => {
            .attr("y", 600)
            .attr("height", 30 + "px")
            .attr("width", 40 + "px")
-           .attr("fill", "#FBA16C") // apricot1 color
+           .attr("fill", apricot1)
            .attr("class", "border");
 
         /* 10.6 - 11.7 light red bar */
@@ -134,7 +186,7 @@ const getData = () => {
            .attr("y", 600)
            .attr("height", 30 + "px")
            .attr("width", 40 + "px")
-           .attr("fill", "#FF7256") // coral1 color
+           .attr("fill", coral1)
            .attr("class", "border");
 
         /* 11.7 - 12.8 red bar */
@@ -143,7 +195,7 @@ const getData = () => {
            .attr("y", 600)
            .attr("height", 30 + "px")
            .attr("width", 40 + "px")
-           .attr("fill", "#CC1100") // bloodorange (Hex3) color
+           .attr("fill", bloodorange)
            .attr("class", "border");
 
         /* 12.8 dark red bar */
@@ -152,7 +204,7 @@ const getData = () => {
            .attr("y", 600)
            .attr("height", 30 + "px")
            .attr("width", 40 + "px")
-           .attr("fill", "#9D1309") // red delicious apple color
+           .attr("fill", red_delicious_apple)
            .attr("class", "border"); 
 
 
