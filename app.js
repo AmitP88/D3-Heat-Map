@@ -46,7 +46,114 @@ const getData = () => {
            .attr("data-year", (d) => (d.year))
            .attr("data-temp", (d) => Math.round((d.variance + baseTemperature) * 10)/10);
         
+        /* LEGEND - colors from http://www.december.com/html/spec/colorcodes.html */
+        /* background bar */
+        svg.append("rect")
+           .attr("x", 40)
+           .attr("y", 600)
+           .attr("height", 30 + "px")
+           .attr("width", 440 + "px")
+           .attr("fill", "green")
+           .attr("id", "description");
 
+        /* 0 - 2.8 blue bar */
+        svg.append("rect")
+           .attr("x", 40)
+           .attr("y", 600)
+           .attr("height", 30 + "px")
+           .attr("width", 40 + "px")
+           .attr("fill", "#003F87") // sign blue color
+           .attr("class", "border");
+        
+        /* 2.8 - 3.9 blue bar */
+        svg.append("rect")
+           .attr("x", 80)
+           .attr("y", 600)
+           .attr("height", 30 + "px")
+           .attr("width", 40 + "px")
+           .attr("fill", "#4372AA") // denim color
+           .attr("class", "border");    
+
+        /* 3.9 - 5.0 blue bar */
+        svg.append("rect")
+           .attr("x", 120)
+           .attr("y", 600)
+           .attr("height", 30 + "px")
+           .attr("width", 40 + "px")
+           .attr("fill", "#5D92B1") // blue sponge color
+           .attr("class", "border");  
+
+        /* 5.0 - 6.1 blue bar */
+        svg.append("rect")
+           .attr("x", 160)
+           .attr("y", 600)
+           .attr("height", 30 + "px")
+           .attr("width", 40 + "px")
+           .attr("fill", "#ADD8E6") // lightblue (SVG) color
+           .attr("class", "border");
+
+        /* 6.1 - 7.2 blue bar */
+        svg.append("rect")
+           .attr("x", 200)
+           .attr("y", 600)
+           .attr("height", 30 + "px")
+           .attr("width", 40 + "px")
+           .attr("fill", "#E0FFFF") // lightcyan (SVG) color
+           .attr("class", "border");
+
+        /* 7.2 - 8.3 yellow bar */
+        svg.append("rect")
+           .attr("x", 240)
+           .attr("y", 600)
+           .attr("height", 30 + "px")
+           .attr("width", 40 + "px")
+           .attr("fill", "#FFFFAA") // popcorn yellow color
+           .attr("class", "border"); 
+
+        /* 8.3 - 9.5 yellow bar */
+        svg.append("rect")
+           .attr("x", 280)
+           .attr("y", 600)
+           .attr("height", 30 + "px")
+           .attr("width", 40 + "px")
+           .attr("fill", "#EEDD82") // light goldenrod color
+           .attr("class", "border"); 
+
+        /* 9.5 - 10.6 orange bar */
+        svg.append("rect")
+           .attr("x", 320)
+           .attr("y", 600)
+           .attr("height", 30 + "px")
+           .attr("width", 40 + "px")
+           .attr("fill", "#FBA16C") // apricot1 color
+           .attr("class", "border");
+
+        /* 10.6 - 11.7 light red bar */
+        svg.append("rect")
+           .attr("x", 360)
+           .attr("y", 600)
+           .attr("height", 30 + "px")
+           .attr("width", 40 + "px")
+           .attr("fill", "#FF7256") // coral1 color
+           .attr("class", "border");
+
+        /* 11.7 - 12.8 red bar */
+        svg.append("rect")
+           .attr("x", 400)
+           .attr("y", 600)
+           .attr("height", 30 + "px")
+           .attr("width", 40 + "px")
+           .attr("fill", "#CC1100") // bloodorange (Hex3) color
+           .attr("class", "border");
+
+        /* 12.8 dark red bar */
+        svg.append("rect")
+           .attr("x", 440)
+           .attr("y", 600)
+           .attr("height", 30 + "px")
+           .attr("width", 40 + "px")
+           .attr("fill", "#9D1309") // red delicious apple color
+           .attr("class", "border"); 
 
 
     });

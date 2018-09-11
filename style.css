@@ -26,3 +26,10 @@ h1 {
     height: 100vh;
     margin-left: 3%;
 }
+
+.border {
+    stroke: black;
+    stroke-width: 1px;
+    stroke-linejoin: round;    
+}
+
