@@ -36,5 +36,5 @@ h1 {
 
 .cell:hover {
     stroke: black;
-    stroke-width: 1px;
+    stroke-width: 2px;
 }

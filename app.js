@@ -7,7 +7,7 @@ const getData = () => {
         const h = 480; // 12 months * 40 (height of each bar)
 
         /* Padding between SVG canvas boundary and the plotted data */
-        const padding = 100;
+        const padding = 75;
 
         /* format Year for year data */
         const formatYear = d3.timeFormat("%Y");
@@ -222,12 +222,12 @@ const getData = () => {
         const yAxis = d3.axisLeft(yScale).tickFormat(formatMonth);
         svg.append("g")
            .attr("id", "x-axis")
-           .attr("transform", "translate(0, 410)")
+           .attr("transform", "translate(0, 435)")
            .call(xAxis);
 
            svg.append("g")
            .attr("id", "y-axis")
-           .attr("transform", "translate(99, 0)")
+           .attr("transform", "translate(75, 0)")
            .call(yAxis);
 
 
