@@ -23,9 +23,9 @@ h1 {
 }
 
 .canvas {
-    width: 100%;
+    width: 130%;
     height: 100vh;
-    margin-left: 10%;
+    margin-left: 1%;
 }
 
 .border {

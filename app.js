@@ -3,11 +3,11 @@ const getData = () => {
         if (error) console.log(error);
         // console.log(dataset);
 
-        const w = 1500;
+        const w = 2000;
         const h = 480; // 12 months * 40 (height of each bar)
 
         /* Padding between SVG canvas boundary and the plotted data */
-        const padding = 70;
+        const padding = 100;
 
         /* format Year for year data */
         const formatYear = d3.timeFormat("%Y");
@@ -19,7 +19,7 @@ const getData = () => {
         console.log(x_min, x_max);
         const xScale = d3.scaleTime()
                          .domain([x_min, x_max])
-                         .range([padding, w]);
+                         .range([padding, w - padding]);
 
         /* Scale for y-axis */
         let y_min = d3.min(dataset.monthlyVariance, (d) => Date.parse(d.month));
@@ -56,8 +56,8 @@ const getData = () => {
            .append("rect")
            .attr("x", (d) => xScale(Date.parse(d.year)))
            .attr("y", (d) => yScale(Date.parse(d.month)))
-           .attr("height", (h/12) + "px")
-           .attr("width", 10 + "px")
+           .attr("height", 30 + "px")
+           .attr("width", 7 + "px")
            .attr("fill", (d) => {
                let temp = Math.round((d.variance + baseTemperature) * 10)/10;
             //    console.log("temp", temp);
@@ -109,7 +109,7 @@ const getData = () => {
         /* background bar */
         svg.append("rect")
            .attr("x", 40)
-           .attr("y", 600)
+           .attr("y", 500)
            .attr("height", 30 + "px")
            .attr("width", 440 + "px")
            .attr("fill", "green")
@@ -118,7 +118,7 @@ const getData = () => {
         /* 0 - 2.8 blue bar */
         svg.append("rect")
            .attr("x", 40)
-           .attr("y", 600)
+           .attr("y", 500)
            .attr("height", 30 + "px")
            .attr("width", 40 + "px")
            .attr("fill", sign_blue)
@@ -127,7 +127,7 @@ const getData = () => {
         /* 2.8 - 3.9 blue bar */
         svg.append("rect")
            .attr("x", 80)
-           .attr("y", 600)
+           .attr("y", 500)
            .attr("height", 30 + "px")
            .attr("width", 40 + "px")
            .attr("fill", denim)
@@ -136,7 +136,7 @@ const getData = () => {
         /* 3.9 - 5.0 blue bar */
         svg.append("rect")
            .attr("x", 120)
-           .attr("y", 600)
+           .attr("y", 500)
            .attr("height", 30 + "px")
            .attr("width", 40 + "px")
            .attr("fill", blue_sponge)
@@ -145,7 +145,7 @@ const getData = () => {
         /* 5.0 - 6.1 blue bar */
         svg.append("rect")
            .attr("x", 160)
-           .attr("y", 600)
+           .attr("y", 500)
            .attr("height", 30 + "px")
            .attr("width", 40 + "px")
            .attr("fill", light_blue)
@@ -154,7 +154,7 @@ const getData = () => {
         /* 6.1 - 7.2 blue bar */
         svg.append("rect")
            .attr("x", 200)
-           .attr("y", 600)
+           .attr("y", 500)
            .attr("height", 30 + "px")
            .attr("width", 40 + "px")
            .attr("fill", lightcyan)
@@ -163,7 +163,7 @@ const getData = () => {
         /* 7.2 - 8.3 yellow bar */
         svg.append("rect")
            .attr("x", 240)
-           .attr("y", 600)
+           .attr("y", 500)
            .attr("height", 30 + "px")
            .attr("width", 40 + "px")
            .attr("fill", popcorn_yellow)
@@ -172,7 +172,7 @@ const getData = () => {
         /* 8.3 - 9.5 yellow bar */
         svg.append("rect")
            .attr("x", 280)
-           .attr("y", 600)
+           .attr("y", 500)
            .attr("height", 30 + "px")
            .attr("width", 40 + "px")
            .attr("fill", light_goldenrod)
@@ -181,7 +181,7 @@ const getData = () => {
         /* 9.5 - 10.6 orange bar */
         svg.append("rect")
            .attr("x", 320)
-           .attr("y", 600)
+           .attr("y", 500)
            .attr("height", 30 + "px")
            .attr("width", 40 + "px")
            .attr("fill", apricot1)
@@ -190,7 +190,7 @@ const getData = () => {
         /* 10.6 - 11.7 light red bar */
         svg.append("rect")
            .attr("x", 360)
-           .attr("y", 600)
+           .attr("y", 500)
            .attr("height", 30 + "px")
            .attr("width", 40 + "px")
            .attr("fill", coral1)
@@ -199,7 +199,7 @@ const getData = () => {
         /* 11.7 - 12.8 red bar */
         svg.append("rect")
            .attr("x", 400)
-           .attr("y", 600)
+           .attr("y", 500)
            .attr("height", 30 + "px")
            .attr("width", 40 + "px")
            .attr("fill", bloodorange)
@@ -208,7 +208,7 @@ const getData = () => {
         /* 12.8 dark red bar */
         svg.append("rect")
            .attr("x", 440)
-           .attr("y", 600)
+           .attr("y", 500)
            .attr("height", 30 + "px")
            .attr("width", 40 + "px")
            .attr("fill", red_delicious_apple)
@@ -216,16 +216,18 @@ const getData = () => {
 
 
         /* Added x and y axes to the left and bottom of the svg canvas */
-        const xAxis = d3.axisBottom(xScale).tickFormat(formatYear).ticks(26);
+        let number_of_years = Math.floor((dataset.monthlyVariance.length)/(12 * 10)); // # of total data points divided by 10 years worth of months (12 months in a year times 10 years = 120 months in 10 years)
+        console.log(number_of_years);
+        const xAxis = d3.axisBottom(xScale).tickFormat(formatYear).ticks(number_of_years);
         const yAxis = d3.axisLeft(yScale).tickFormat(formatMonth);
         svg.append("g")
            .attr("id", "x-axis")
-           .attr("transform", "translate(0, 450)")
+           .attr("transform", "translate(0, 410)")
            .call(xAxis);
 
            svg.append("g")
            .attr("id", "y-axis")
-           .attr("transform", "translate(70, 40)")
+           .attr("transform", "translate(99, 0)")
            .call(yAxis);
 
 
