@@ -108,7 +108,7 @@ const getData = () => {
         
         /* background bar */
         svg.append("rect")
-           .attr("x", 40)
+           .attr("x", 100)
            .attr("y", 500)
            .attr("height", 30 + "px")
            .attr("width", 440 + "px")
@@ -117,7 +117,7 @@ const getData = () => {
 
         /* 0 - 2.8 blue bar */
         svg.append("rect")
-           .attr("x", 40)
+           .attr("x", 100)
            .attr("y", 500)
            .attr("height", 30 + "px")
            .attr("width", 40 + "px")
@@ -126,7 +126,7 @@ const getData = () => {
         
         /* 2.8 - 3.9 blue bar */
         svg.append("rect")
-           .attr("x", 80)
+           .attr("x", 140)
            .attr("y", 500)
            .attr("height", 30 + "px")
            .attr("width", 40 + "px")
@@ -135,7 +135,7 @@ const getData = () => {
 
         /* 3.9 - 5.0 blue bar */
         svg.append("rect")
-           .attr("x", 120)
+           .attr("x", 180)
            .attr("y", 500)
            .attr("height", 30 + "px")
            .attr("width", 40 + "px")
@@ -144,7 +144,7 @@ const getData = () => {
 
         /* 5.0 - 6.1 blue bar */
         svg.append("rect")
-           .attr("x", 160)
+           .attr("x", 220)
            .attr("y", 500)
            .attr("height", 30 + "px")
            .attr("width", 40 + "px")
@@ -153,7 +153,7 @@ const getData = () => {
 
         /* 6.1 - 7.2 blue bar */
         svg.append("rect")
-           .attr("x", 200)
+           .attr("x", 260)
            .attr("y", 500)
            .attr("height", 30 + "px")
            .attr("width", 40 + "px")
@@ -162,7 +162,7 @@ const getData = () => {
 
         /* 7.2 - 8.3 yellow bar */
         svg.append("rect")
-           .attr("x", 240)
+           .attr("x", 300)
            .attr("y", 500)
            .attr("height", 30 + "px")
            .attr("width", 40 + "px")
@@ -171,7 +171,7 @@ const getData = () => {
 
         /* 8.3 - 9.5 yellow bar */
         svg.append("rect")
-           .attr("x", 280)
+           .attr("x", 340)
            .attr("y", 500)
            .attr("height", 30 + "px")
            .attr("width", 40 + "px")
@@ -180,7 +180,7 @@ const getData = () => {
 
         /* 9.5 - 10.6 orange bar */
         svg.append("rect")
-           .attr("x", 320)
+           .attr("x", 380)
            .attr("y", 500)
            .attr("height", 30 + "px")
            .attr("width", 40 + "px")
@@ -189,7 +189,7 @@ const getData = () => {
 
         /* 10.6 - 11.7 light red bar */
         svg.append("rect")
-           .attr("x", 360)
+           .attr("x", 420)
            .attr("y", 500)
            .attr("height", 30 + "px")
            .attr("width", 40 + "px")
@@ -198,7 +198,7 @@ const getData = () => {
 
         /* 11.7 - 12.8 red bar */
         svg.append("rect")
-           .attr("x", 400)
+           .attr("x", 460)
            .attr("y", 500)
            .attr("height", 30 + "px")
            .attr("width", 40 + "px")
@@ -207,7 +207,7 @@ const getData = () => {
 
         /* 12.8 dark red bar */
         svg.append("rect")
-           .attr("x", 440)
+           .attr("x", 500)
            .attr("y", 500)
            .attr("height", 30 + "px")
            .attr("width", 40 + "px")
@@ -216,7 +216,7 @@ const getData = () => {
 
 
         /* Added x and y axes to the left and bottom of the svg canvas */
-        let number_of_years = Math.floor((dataset.monthlyVariance.length)/(12 * 10)); // # of total data points divided by 10 years worth of months (12 months in a year times 10 years = 120 months in 10 years)
+        let number_of_years = Math.floor((dataset.monthlyVariance.length)/(12 * 10)); // # of total data points divided by 10 years worth of months (12 months in a year times 10 years = 120 months in 10 years). One tick is for every 10 years.
         console.log(number_of_years);
         const xAxis = d3.axisBottom(xScale).tickFormat(formatYear).ticks(number_of_years);
         const yAxis = d3.axisLeft(yScale).tickFormat(formatMonth);
