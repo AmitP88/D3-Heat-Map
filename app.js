@@ -3,22 +3,27 @@ const getData = () => {
         if (error) console.log(error);
         // console.log(dataset);
 
-        const w = 1000;
-        const h = 500;
+        const w = 1500;
+        const h = 480; // 12 months * 40 (height of each bar)
 
         /* Padding between SVG canvas boundary and the plotted data */
-        const padding = 40;
+        const padding = 70;
+
+        /* format Year for year data */
+        const formatYear = d3.timeFormat("%Y");
+        const formatMonth = d3.timeFormat("%B");
 
         /* Scale for x-axis */
-        let x_min = d3.min(dataset.monthlyVariance, (d) => d.year);
-        let x_max = d3.max(dataset.monthlyVariance, (d) => d.year);
+        let x_min = d3.min(dataset.monthlyVariance, (d) => Date.parse(d.year));
+        let x_max = d3.max(dataset.monthlyVariance, (d) => Date.parse(d.year));
+        console.log(x_min, x_max);
         const xScale = d3.scaleTime()
                          .domain([x_min, x_max])
-                         .range([padding, w - padding]);
+                         .range([padding, w]);
 
         /* Scale for y-axis */
-        let y_min = d3.min(dataset.monthlyVariance, (d) => d.month);
-        let y_max = d3.max(dataset.monthlyVariance, (d) => d.month);
+        let y_min = d3.min(dataset.monthlyVariance, (d) => Date.parse(d.month));
+        let y_max = d3.max(dataset.monthlyVariance, (d) => Date.parse(d.month));
         const yScale = d3.scaleTime()
                          .domain([y_max, y_min])
                          .range([h - padding, padding]);
@@ -49,10 +54,10 @@ const getData = () => {
            .data(dataset.monthlyVariance)
            .enter()
            .append("rect")
-           .attr("x", (d) => xScale(d.year))
-           .attr("y", (d) => yScale(d.month))
-           .attr("height", 50 + "px")
-           .attr("width", 5 + "px")
+           .attr("x", (d) => xScale(Date.parse(d.year)))
+           .attr("y", (d) => yScale(Date.parse(d.month)))
+           .attr("height", (h/12) + "px")
+           .attr("width", 10 + "px")
            .attr("fill", (d) => {
                let temp = Math.round((d.variance + baseTemperature) * 10)/10;
             //    console.log("temp", temp);
@@ -98,6 +103,8 @@ const getData = () => {
            .attr("data-month", (d) => (d.month))
            .attr("data-year", (d) => (d.year))
            .attr("data-temp", (d) => Math.round((d.variance + baseTemperature) * 10)/10);
+
+        /* =============== LEGEND =============== */
         
         /* background bar */
         svg.append("rect")
@@ -205,7 +212,35 @@ const getData = () => {
            .attr("height", 30 + "px")
            .attr("width", 40 + "px")
            .attr("fill", red_delicious_apple)
-           .attr("class", "border"); 
+           .attr("class", "border");
+
+
+        /* Added x and y axes to the left and bottom of the svg canvas */
+        const xAxis = d3.axisBottom(xScale).tickFormat(formatYear).ticks(26);
+        const yAxis = d3.axisLeft(yScale).tickFormat(formatMonth);
+        svg.append("g")
+           .attr("id", "x-axis")
+           .attr("transform", "translate(0, 450)")
+           .call(xAxis);
+
+           svg.append("g")
+           .attr("id", "y-axis")
+           .attr("transform", "translate(70, 40)")
+           .call(yAxis);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     });
