@@ -111,7 +111,7 @@ const getData = () => {
                .duration(200)		
                .style("opacity", .9);
             
-            div.html(formatMonth(Date.parse(d.month)) + "<span> </span>" + (d.month) + "</br>" + (Math.round((d.variance + baseTemperature) * 10)/10) + "<span>&#8451;</span>" + "</br>" + d.variance + "<span>&#8451;</span>")	
+            div.html(formatMonth(Date.parse(d.month)) + "<span> </span>" + (d.month) + "</br>" + (Math.round((d.variance + baseTemperature) * 10)/10) + "<span>&#8451;</span>" + "</br>" + (d.variance) + "<span>&#8451;</span>")	
                .style("left", (d3.event.pageX) + 10 + "px")		
                .style("top", (d3.event.pageY - 28) + "px")
                .attr("data-year", d.year);
