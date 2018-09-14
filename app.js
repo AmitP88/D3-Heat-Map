@@ -136,6 +136,21 @@ const getData = () => {
            .attr("transform", "translate(75, 0)")
            .call(yAxis);
 
+             // text label for the x axis
+            svg.append("text")             
+            .attr("transform", "translate(1000, 500)")
+            .style("text-anchor", "middle")
+            .text("Years");
+
+             // text label for the y axis
+            svg.append("text")
+            .attr("transform", "rotate(-90)")
+            .attr("y", 0)
+            .attr("x", -250)
+            .attr("dy", "1em")
+            .style("text-anchor", "middle")
+            .text("Months");
+
         /* =============== LEGEND =============== */
         
         /* background bar */
