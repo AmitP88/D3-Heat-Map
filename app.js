@@ -59,9 +59,9 @@ const getData = () => {
            .enter()
            .append("rect")
            .attr("x", (d) => xScale(Date.parse(d.year)))
-           .attr("y", (d) => yScale(Date.parse(d.month)))
-           .attr("height", 30 + "px")
-           .attr("width", 7 + "px")
+           .attr("y", (d) => yScale(Date.parse(d.month)) - 15)
+           .attr("height", 30)
+           .attr("width", 7)
            .attr("fill", (d) => {
                let temp = Math.round((d.variance + baseTemperature) * 10)/10;
                switch(true) {
@@ -239,7 +239,7 @@ const getData = () => {
         const yAxis = d3.axisLeft(yScale).tickFormat(formatMonth);
         svg.append("g")
            .attr("id", "x-axis")
-           .attr("transform", "translate(0, 435)")
+           .attr("transform", "translate(0, 420)")
            .call(xAxis);
 
            svg.append("g")
