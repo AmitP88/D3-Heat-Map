@@ -23,7 +23,7 @@ const getData = () => {
         let y_min = d3.min(dataset.monthlyVariance, (d) => Date.parse(d.month));
         let y_max = d3.max(dataset.monthlyVariance, (d) => Date.parse(d.month));
         const yScale = d3.scaleTime()
-                         .domain([y_max, y_min])
+                         .domain([y_min, y_max])
                          .range([h - padding, padding]);
 
         /* Add an SVG Canvas */
