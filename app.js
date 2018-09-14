@@ -122,6 +122,20 @@ const getData = () => {
                 .style("opacity", 0);
             });
 
+        /* Added x and y axes to the left and bottom of the svg canvas */
+        let number_of_years = Math.floor((dataset.monthlyVariance.length)/(12 * 10)); // # of total data points divided by 10 years worth of months (12 months in a year times 10 years = 120 months in 10 years). One tick is for every 10 years.
+        const xAxis = d3.axisBottom(xScale).tickFormat(formatYear).ticks(number_of_years);
+        const yAxis = d3.axisLeft(yScale).tickFormat(formatMonth);
+        svg.append("g")
+           .attr("id", "x-axis")
+           .attr("transform", "translate(0, 420)")
+           .call(xAxis);
+
+           svg.append("g")
+           .attr("id", "y-axis")
+           .attr("transform", "translate(75, 0)")
+           .call(yAxis);
+
         /* =============== LEGEND =============== */
         
         /* background bar */
@@ -232,23 +246,21 @@ const getData = () => {
            .attr("fill", red_delicious_apple)
            .attr("class", "border");
 
+        const legend_points = [2.8, 3.9, 5.0, 6.1, 7.2, 8.3, 9.5, 10.6, 11.7, 12.8];
 
-        /* Added x and y axes to the left and bottom of the svg canvas */
-        let number_of_years = Math.floor((dataset.monthlyVariance.length)/(12 * 10)); // # of total data points divided by 10 years worth of months (12 months in a year times 10 years = 120 months in 10 years). One tick is for every 10 years.
-        const xAxis = d3.axisBottom(xScale).tickFormat(formatYear).ticks(number_of_years);
-        const yAxis = d3.axisLeft(yScale).tickFormat(formatMonth);
-        svg.append("g")
-           .attr("id", "x-axis")
-           .attr("transform", "translate(0, 420)")
-           .call(xAxis);
+        /* Scale for legend */
+        let legend_min = d3.min(legend_points, (p) => p);
+        let legend_max = d3.max(legend_points, (p) => p);
+        console.log(legend_min, legend_max);
+        const legendScale = d3.scaleLinear()
+                            .domain([legend_min, legend_max])
+                            .range([31.5, 431.5]);
 
-           svg.append("g")
-           .attr("id", "y-axis")
-           .attr("transform", "translate(75, 0)")
-           .call(yAxis);
-
-
-
+        /* Axis for legend */
+        const legendAxis = d3.axisBottom(legendScale).tickSizeOuter([0]);
+        legend.append("g")
+           .attr("transform", "translate(100, 529.5)")
+           .call(legendAxis);
 
 
 
