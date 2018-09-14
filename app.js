@@ -1,8 +1,6 @@
 const getData = () => {
     d3.json("https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/master/global-temperature.json", (error, dataset) => {
         if (error) console.log(error);
-        // console.log(dataset);
-
         const w = 2000;
         const h = 480; // 12 months * 40 (height of each bar)
 
@@ -16,7 +14,7 @@ const getData = () => {
         /* Scale for x-axis */
         let x_min = d3.min(dataset.monthlyVariance, (d) => Date.parse(d.year));
         let x_max = d3.max(dataset.monthlyVariance, (d) => Date.parse(d.year));
-        console.log(x_min, x_max);
+
         const xScale = d3.scaleTime()
                          .domain([x_min, x_max])
                          .range([padding, w - padding]);
@@ -33,6 +31,13 @@ const getData = () => {
                       .append("svg")
                       .attr("class", "canvas");
 
+        // Define the div for the tooltip
+        var div = d3.select(".container")
+                    .append("div")	
+                    .attr("class", "tooltip")
+                    .attr("id", "tooltip")
+                    .style("opacity", 0);
+
         /* Color codes for different temperatures - colors from http://www.december.com/html/spec/colorcodes.html */
         const sign_blue = "#003F87";
         const denim = "#4372AA";
@@ -48,7 +53,6 @@ const getData = () => {
 
         /* Add data points to SVG Canvas as bars */
         let baseTemperature = dataset.baseTemperature;
-        // console.log(baseTemperature);
 
         svg.selectAll("rect")
            .data(dataset.monthlyVariance)
@@ -60,7 +64,6 @@ const getData = () => {
            .attr("width", 7 + "px")
            .attr("fill", (d) => {
                let temp = Math.round((d.variance + baseTemperature) * 10)/10;
-            //    console.log("temp", temp);
                switch(true) {
                 case (temp <= 2.8):
                     return sign_blue;
@@ -102,21 +105,36 @@ const getData = () => {
            .attr("class", "cell")
            .attr("data-month", (d) => (d.month))
            .attr("data-year", (d) => (d.year))
-           .attr("data-temp", (d) => Math.round((d.variance + baseTemperature) * 10)/10);
+           .attr("data-temp", (d) => Math.round((d.variance + baseTemperature) * 10)/10)
+           .on("mouseover", (d) => {		
+            div.transition()		
+               .duration(200)		
+               .style("opacity", .9);
+            
+            div.html((d.year) + "</br>" + formatMonth(Date.parse(d.month)))	
+               .style("left", (d3.event.pageX) + 10 + "px")		
+               .style("top", (d3.event.pageY - 28) + "px")
+               .attr("data-year", d.year);
+            })					
+            .on("mouseout", function(d) {		
+                div.transition()		
+                .duration(500)		
+                .style("opacity", 0);
+            });
 
         /* =============== LEGEND =============== */
         
         /* background bar */
-        svg.append("rect")
+        const legend = svg.append("g")
            .attr("x", 100)
            .attr("y", 500)
            .attr("height", 30 + "px")
            .attr("width", 440 + "px")
            .attr("fill", "green")
-           .attr("id", "description");
+           .attr("id", "legend");
 
         /* 0 - 2.8 blue bar */
-        svg.append("rect")
+        legend.append("rect")
            .attr("x", 100)
            .attr("y", 500)
            .attr("height", 30 + "px")
@@ -125,7 +143,7 @@ const getData = () => {
            .attr("class", "border");
         
         /* 2.8 - 3.9 blue bar */
-        svg.append("rect")
+        legend.append("rect")
            .attr("x", 140)
            .attr("y", 500)
            .attr("height", 30 + "px")
@@ -134,7 +152,7 @@ const getData = () => {
            .attr("class", "border");    
 
         /* 3.9 - 5.0 blue bar */
-        svg.append("rect")
+        legend.append("rect")
            .attr("x", 180)
            .attr("y", 500)
            .attr("height", 30 + "px")
@@ -143,7 +161,7 @@ const getData = () => {
            .attr("class", "border");  
 
         /* 5.0 - 6.1 blue bar */
-        svg.append("rect")
+        legend.append("rect")
            .attr("x", 220)
            .attr("y", 500)
            .attr("height", 30 + "px")
@@ -152,7 +170,7 @@ const getData = () => {
            .attr("class", "border");
 
         /* 6.1 - 7.2 blue bar */
-        svg.append("rect")
+        legend.append("rect")
            .attr("x", 260)
            .attr("y", 500)
            .attr("height", 30 + "px")
@@ -161,7 +179,7 @@ const getData = () => {
            .attr("class", "border");
 
         /* 7.2 - 8.3 yellow bar */
-        svg.append("rect")
+        legend.append("rect")
            .attr("x", 300)
            .attr("y", 500)
            .attr("height", 30 + "px")
@@ -170,7 +188,7 @@ const getData = () => {
            .attr("class", "border"); 
 
         /* 8.3 - 9.5 yellow bar */
-        svg.append("rect")
+        legend.append("rect")
            .attr("x", 340)
            .attr("y", 500)
            .attr("height", 30 + "px")
@@ -179,7 +197,7 @@ const getData = () => {
            .attr("class", "border"); 
 
         /* 9.5 - 10.6 orange bar */
-        svg.append("rect")
+        legend.append("rect")
            .attr("x", 380)
            .attr("y", 500)
            .attr("height", 30 + "px")
@@ -188,7 +206,7 @@ const getData = () => {
            .attr("class", "border");
 
         /* 10.6 - 11.7 light red bar */
-        svg.append("rect")
+        legend.append("rect")
            .attr("x", 420)
            .attr("y", 500)
            .attr("height", 30 + "px")
@@ -197,7 +215,7 @@ const getData = () => {
            .attr("class", "border");
 
         /* 11.7 - 12.8 red bar */
-        svg.append("rect")
+        legend.append("rect")
            .attr("x", 460)
            .attr("y", 500)
            .attr("height", 30 + "px")
@@ -206,7 +224,7 @@ const getData = () => {
            .attr("class", "border");
 
         /* 12.8 dark red bar */
-        svg.append("rect")
+        legend.append("rect")
            .attr("x", 500)
            .attr("y", 500)
            .attr("height", 30 + "px")
@@ -217,7 +235,6 @@ const getData = () => {
 
         /* Added x and y axes to the left and bottom of the svg canvas */
         let number_of_years = Math.floor((dataset.monthlyVariance.length)/(12 * 10)); // # of total data points divided by 10 years worth of months (12 months in a year times 10 years = 120 months in 10 years). One tick is for every 10 years.
-        console.log(number_of_years);
         const xAxis = d3.axisBottom(xScale).tickFormat(formatYear).ticks(number_of_years);
         const yAxis = d3.axisLeft(yScale).tickFormat(formatMonth);
         svg.append("g")

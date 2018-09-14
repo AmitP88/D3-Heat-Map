@@ -22,6 +22,14 @@ h1 {
     font-size: -webkit-xxx-large;
 }
 
+h2 {
+    text-align: center;
+    padding-top: 3%;
+    margin-bottom: 0;
+    font-family: monospace;
+    font-size: 20px;
+}
+
 .canvas {
     width: 130%;
     height: 100vh;
@@ -37,4 +45,17 @@ h1 {
 .cell:hover {
     stroke: black;
     stroke-width: 2px;
+}
+
+.tooltip {	
+    position: absolute;			
+    text-align: center;			
+    width: 70px;					
+    height: 30px;					
+    padding: 2px;				
+    font: 12px sans-serif;		
+    background: lightsteelblue;	
+    border: 0px;		
+    border-radius: 8px;			
+    pointer-events: none;			
 }
