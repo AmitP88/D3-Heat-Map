@@ -103,7 +103,7 @@ const getData = () => {
                }
            })
            .attr("class", "cell")
-           .attr("data-month", (d) => (d.month))
+           .attr("data-month", (d) => (d.month) - 1)
            .attr("data-year", (d) => (d.year))
            .attr("data-temp", (d) => Math.round((d.variance + baseTemperature) * 10)/10)
            .on("mouseover", (d) => {		
